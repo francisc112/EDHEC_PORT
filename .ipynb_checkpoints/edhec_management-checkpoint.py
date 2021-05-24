@@ -17,38 +17,15 @@ from scipy.optimize import minimize
 class Risk:
     
     def __init__(self):
-        """
-        Risk Module to calculate Portfolio Analysis Statistics
-        """
         pass
 
     def max_drawdown(self,returns):
-        """
-        Calculate the max drawdown of a given set of stock or stocks.
-
-        Parameters:
-             returns pd.Series or pd.DataFrame:
-                The series or df where the stock returns are being held.
-        Returns:
-            pd.DataFrame
-                df containing the max dradown of the stock or of the specified stocks
-        """
         wealth_index = 1000 * (1 + returns).cumprod()
         previous_peaks = wealth_index.cummax()
         drawdowns = (wealth_index - previous_peaks) / previous_peaks
         return drawdowns.min()
 
     def wealth_to_date(self,returns,initial_investment = 1000):
-        """
-        If you invested (initial_investment), how much would you have now?
-
-        Parameters:
-             returns pd.Series or pd.DataFrame:
-                objects where the stock returns are being held
-
-            initial_investment float:
-                The amount of money that represents your initial investment.
-        """
         wealth_index = initial_investment * (1 + returns).cumprod()
         return wealth_index.iloc[-1]
 
